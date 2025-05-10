@@ -1,5 +1,5 @@
+using MongoDB.Bson;
 using MongoDB.Driver;
-//using ExchangeRateReader.Models;
 using OkooraProjectRatePrinter.Models;
 
 internal class Program
@@ -25,11 +25,11 @@ internal class Program
         {
             try
             {
-                var sort = Builders<ExchangePackage>.Sort.Descending(x => x.CreatedAt);
-                var latestPackage = await collection.Find(_ => true)
-                                                     .Sort(sort)
-                                                     .Limit(1)
-                                                     .FirstOrDefaultAsync();
+                var sort = Builders<ExchangePackage>.Sort.Descending(x => x.Id);
+                var latestPackage = await collection.Find(new BsonDocument())
+                    .Sort(sort)
+                    .Limit(1)
+                    .FirstOrDefaultAsync();
 
                 Console.Clear();
                 if (latestPackage != null)
